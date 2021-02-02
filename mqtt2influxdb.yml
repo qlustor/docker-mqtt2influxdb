@@ -1,0 +1,59 @@
+mqtt:
+    host: mosquitto
+    port: 1883
+
+influxdb:
+    host: influxdb
+    port: 8086
+    database: mqtt
+
+points:
+  - measurement: temperature
+    topic: node/+/thermometer/+/temperature
+    fields:
+      value: $.payload
+    tags:
+      id: $.topic[1]
+      channel: $.topic[3]
+
+  - measurement: relative-humidity
+    topic: node/+/hygrometer/0:4/relative-humidity
+    fields:
+      value: $.payload
+    tags:
+      id: $.topic[1]
+
+  - measurement: illuminance
+    topic: node/+/lux-meter/0:0/illuminance
+    fields:
+      value: $.payload
+    tags:
+      id: $.topic[1]
+
+  - measurement: pressure
+    topic: node/+/barometer/0:0/pressure
+    fields:
+      value: $.payload
+    tags:
+      id: $.topic[1]
+  - measurement: co2
+    topic: node/+/co2-meter/-/concentration
+    fields:
+      value: $.payload
+    tags:
+      id: $.topic[1]
+
+  - measurement: voltage
+    topic: node/+/battery/+/voltage
+    fields:
+      value: $.payload
+    tags:
+      id: $.topic[1]
+
+  - measurement: button
+    topic: node/+/push-button/+/event-count
+    fields:
+      value: $.payload
+    tags:
+      id: $.topic[1]
+      channel: $.topic[3]
